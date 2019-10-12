@@ -14,6 +14,8 @@
  * License for the specific language governing permissions
  * and limitations under the License.
  */
+import AsyncStorage from '@react-native-community/async-storage';
+
 let dataMemory = {};
 
 /** @class */
@@ -58,6 +60,65 @@ class MemoryStorage {
     return dataMemory;
   }
 }
+
+/** @class */
+class LocalAsyncStorage {
+
+  /**
+   * This is used to set a specific item in storage
+   * @param {string} key - the key for the item
+   * @param {object} value - the value
+   * @returns {string} value that was set
+   */
+  static setItem(key, value) {
+
+    AsyncStorage.setItem(key, value)
+      .then(response => {
+        console.log('stored key');
+        console.log(response)
+      }).catch(err => {
+        console.log(err);
+      })
+    // dataMemory[key] = value;
+    // return dataMemory[key];
+  }
+
+  /**
+   * This is used to get a specific key from storage
+   * @param {string} key - the key for the item
+   * This is used to clear the storage
+   * @returns {string} the data item
+   */
+  static getItem(key) {
+    AsyncStorage.setItem(key, value)
+      .then(response => {
+        console.log('stored key');
+        console.log(response)
+      }).catch(err => {
+        console.log(err);
+      })
+    //return Object.prototype.hasOwnProperty.call(dataMemory, key) ? dataMemory[key] : undefined;
+  }
+
+  /**
+   * This is used to remove an item from storage
+   * @param {string} key - the key being set
+   * @returns {string} value - value that was deleted
+   */
+  static removeItem(key) {
+    return delete dataMemory[key];
+  }
+
+  /**
+   * This is used to clear the storage
+   * @returns {string} nothing
+   */
+  static clear() {
+    dataMemory = {};
+    return dataMemory;
+  }
+}
+
 
 /** @class */
 export default class StorageHelper {

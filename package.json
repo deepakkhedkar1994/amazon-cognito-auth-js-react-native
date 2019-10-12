@@ -55,6 +55,7 @@
     "webpack": "^1.13.1"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.6.2",
     "js-cookie": "^2.1.4"
   }
 }
