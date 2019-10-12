@@ -106,7 +106,14 @@ class LocalAsyncStorage {
    * @returns {string} value - value that was deleted
    */
   static removeItem(key) {
-    return delete dataMemory[key];
+    AsyncStorage.setItem(key, '')
+      .then(response => {
+        console.log('deleted key');
+        console.log(response)
+      }).catch(err => {
+        console.log(err);
+      })
+    //return delete dataMemory[key];
   }
 
   /**
