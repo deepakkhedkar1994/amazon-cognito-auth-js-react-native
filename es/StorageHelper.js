@@ -16,6 +16,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * License for the specific language governing permissions
  * and limitations under the License.
  */
+import AsyncStorage from '@react-native-community/async-storage';
+
 var dataMemory = {};
 
 /** @class */
@@ -76,6 +78,81 @@ var MemoryStorage = function () {
 /** @class */
 
 
+var LocalAsyncStorage = function () {
+  function LocalAsyncStorage() {
+    _classCallCheck(this, LocalAsyncStorage);
+  }
+
+  /**
+   * This is used to set a specific item in storage
+   * @param {string} key - the key for the item
+   * @param {object} value - the value
+   * @returns {string} value that was set
+   */
+  LocalAsyncStorage.setItem = function setItem(key, value) {
+
+    AsyncStorage.setItem(key, value).then(function (response) {
+      console.log('stored key');
+      console.log(response);
+    }).catch(function (err) {
+      console.log(err);
+    });
+    // dataMemory[key] = value;
+    // return dataMemory[key];
+  };
+
+  /**
+   * This is used to get a specific key from storage
+   * @param {string} key - the key for the item
+   * This is used to clear the storage
+   * @returns {string} the data item
+   */
+
+
+  LocalAsyncStorage.getItem = function getItem(key) {
+    AsyncStorage.setItem(key, value).then(function (response) {
+      console.log('stored key');
+      console.log(response);
+    }).catch(function (err) {
+      console.log(err);
+    });
+    //return Object.prototype.hasOwnProperty.call(dataMemory, key) ? dataMemory[key] : undefined;
+  };
+
+  /**
+   * This is used to remove an item from storage
+   * @param {string} key - the key being set
+   * @returns {string} value - value that was deleted
+   */
+
+
+  LocalAsyncStorage.removeItem = function removeItem(key) {
+    AsyncStorage.setItem(key, '').then(function (response) {
+      console.log('deleted key');
+      console.log(response);
+    }).catch(function (err) {
+      console.log(err);
+    });
+    //return delete dataMemory[key];
+  };
+
+  /**
+   * This is used to clear the storage
+   * @returns {string} nothing
+   */
+
+
+  LocalAsyncStorage.clear = function clear() {
+    dataMemory = {};
+    return dataMemory;
+  };
+
+  return LocalAsyncStorage;
+}();
+
+/** @class */
+
+
 var StorageHelper = function () {
 
   /**
@@ -86,7 +163,7 @@ var StorageHelper = function () {
     _classCallCheck(this, StorageHelper);
 
     try {
-      this.storageWindow = window.localStorage;
+      this.storageWindow = LocalAsyncStorage;
       this.storageWindow.setItem('aws.cognito.test-ls', 1);
       this.storageWindow.removeItem('aws.cognito.test-ls');
     } catch (exception) {

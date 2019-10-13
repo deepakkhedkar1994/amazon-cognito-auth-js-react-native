@@ -350,10 +350,12 @@ var CognitoAuth = function () {
       var codeParameter = map.get(this.getCognitoConstants().CODE);
       var url = this.getCognitoConstants().DOMAIN_SCHEME.concat(this.getCognitoConstants().COLONDOUBLESLASH, this.getAppWebDomain(), this.getCognitoConstants().SLASH, this.getCognitoConstants().DOMAIN_PATH_TOKEN);
       var header = this.getCognitoConstants().HEADER;
-      var body = { grant_type: this.getCognitoConstants().AUTHORIZATIONCODE,
+      var body = {
+        grant_type: this.getCognitoConstants().AUTHORIZATIONCODE,
         client_id: this.getClientId(),
         redirect_uri: this.RedirectUriSignIn,
-        code: codeParameter };
+        code: codeParameter
+      };
       var boundOnSuccess = this.onSuccessExchangeForToken.bind(this);
       var boundOnFailure = this.onFailure.bind(this);
       this.makePOSTRequest(header, body, url, boundOnSuccess, boundOnFailure);
@@ -588,10 +590,12 @@ var CognitoAuth = function () {
     // https POST call for refreshing token
     var url = this.getCognitoConstants().DOMAIN_SCHEME.concat(this.getCognitoConstants().COLONDOUBLESLASH, this.getAppWebDomain(), this.getCognitoConstants().SLASH, this.getCognitoConstants().DOMAIN_PATH_TOKEN);
     var header = this.getCognitoConstants().HEADER;
-    var body = { grant_type: this.getCognitoConstants().REFRESHTOKEN,
+    var body = {
+      grant_type: this.getCognitoConstants().REFRESHTOKEN,
       client_id: this.getClientId(),
       redirect_uri: this.RedirectUriSignIn,
-      refresh_token: refreshToken };
+      refresh_token: refreshToken
+    };
     var boundOnSuccess = this.onSuccessRefreshToken.bind(this);
     var boundOnFailure = this.onFailure.bind(this);
     this.makePOSTRequest(header, body, url, boundOnSuccess, boundOnFailure);
@@ -781,7 +785,7 @@ var CognitoAuth = function () {
 
   CognitoAuth.prototype.signOut = function signOut() {
     var URL = this.getFQDNSignOut();
-    this.signInUserSession = null;
+    this.signInUserSession = new CognitoAuthSession();
     this.clearCachedTokensScopes();
     this.launchUri(URL);
   };
